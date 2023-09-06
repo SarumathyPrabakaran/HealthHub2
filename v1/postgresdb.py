@@ -1,4 +1,3 @@
-
 import psycopg2
 
 from sqlalchemy import Float, column, create_engine
@@ -10,7 +9,7 @@ from sqlalchemy.ext.declarative import DeclarativeMeta
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import func
 from sqlalchemy.orm import relationship, backref
-
+from datetime import datetime
 
 
 from dotenv import load_dotenv
@@ -21,26 +20,30 @@ JSON_MIME_TYPE = 'application/json'
 
 Base = declarative_base()
 
-DB_NAME=os.getenv('DB_NAME')
-DB_USER=os.getenv('DB_USER')
-DB_PASS=os.getenv('DB_PASS')
-DB_HOST=os.getenv('DB_HOST')
-DB_PORT=os.getenv('DB_PORT')
+import mysql.connector
 
+# Replace your PostgreSQL configuration with MySQL configuration
+DB_NAME = os.getenv('DB_NAME')
+DB_USER = os.getenv('DB_USER')
+DB_PASS = os.getenv('DB_PASS')
+DB_HOST = os.getenv('DB_HOST')
+DB_PORT = os.getenv('DB_PORT')
 
-conn = psycopg2.connect(database    =DB_NAME,
-                        user        =DB_USER,
-                        password    =DB_PASS,
-                        host        =DB_HOST,
-                        port        =DB_PORT)
+conn = mysql.connector.connect(
+    database=DB_NAME,
+    user=DB_USER,
+    password=DB_PASS,
+    host=DB_HOST,
+    port=DB_PORT
+)
+
 print("Database connected successfully")
+cur = conn.cursor()
 
-
-
-cur = conn.cursor()  
 
 def get_session():
-    engine = create_engine(f'postgresql+psycopg2://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}')
+    # Modify the SQLAlchemy connection string for MySQL
+    engine = create_engine(f'mysql+mysqlconnector://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}')
     Base.metadata.bind = engine
 
     DBSession = sessionmaker(bind=engine)
@@ -48,6 +51,7 @@ def get_session():
 
     Base.metadata.create_all(engine)
     return session
+
 
 class logincred(Base):
     __tablename__= "logincred"
@@ -82,4 +86,15 @@ class ActivityTracking(Base):
     activity_id =Column(Integer, ForeignKey('activities.activity_id'))
     status = Column(Integer)
     
-session = get_session()
+
+
+class Forum(Base):
+    __tablename__ = "forum"
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey('logincred.id'))
+    date = Column(Date,default=datetime.utcnow)
+    content = Column(String(255))
+
+
+
+session1 = get_session()

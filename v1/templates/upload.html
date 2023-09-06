@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Add your CSS styles here -->
+</head>
+<body>
+    <h1>Welcome, {{ username }}</h1>
+    <h2>Uploaded Files</h2>
+    <ul>
+        {% for file in files %}
+            <li>
+                {{ file }}
+                <!-- <form action="/rename/{{ file }}" method="post">
+                    <input type="text" name="new_filename" placeholder="New Filename">
+                    <button type="submit">Rename</button>
+                </form> -->
+            </li>
+        {% endfor %}
+    </ul>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="file">
+        <button type="submit">Upload</button>
+    </form>
+</body>
+</html>
