@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My-Parents-Health</title>
+</head>
+<body>
+    <a href="/">Home</a>
+
+    <h2>Profiles - {{user_name}}</h2>
+   <h3>Viewing as: {{view}}</h3>
+    <form action="/add/profiles/{{id}}" method="post">
+        <label for="profile">Add Profile :</label>
+        <input type="text" name="profile">
+
+        <input type="submit" value="submit">
+    </form>
+    <p>
+
+
+        {%for i in l%}
+        <li>
+            <ol>
+                <a href="/get/activities/{{i[0]}}">{{i[1]}}</a>
+            </ol>
+        </li>
+        {%endfor%}
+    </p>
+
+</body>
+</html>
