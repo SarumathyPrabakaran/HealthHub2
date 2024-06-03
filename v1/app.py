@@ -7,7 +7,7 @@ from postgresdb import session,logincred,Profiles,Activity,ActivityTracking
 
 app = Flask(__name__)
 
-app.config['SECRET_KEY'] = "wishlistpage"
+app.config['SECRET_KEY'] = "sarumathy-secret-key-my-project-123q43423qwe3"
 
 
 user_id = 0
@@ -32,11 +32,7 @@ def GetKey(val):
 
 
 def get_person(person):
-    # d = {"son": 0}
-    # prof = session.query(Profiles).all()
-    # for pro in prof:
-    #     d[(pro.profiles).lower()] = pro.id
-    
+
     print(d)
     if(person=="son"):
         print("son")
@@ -56,14 +52,8 @@ def front_home():
 
 
 
-# @app.route("/login", methods= ["GET"])
-# def home():
-#     profile_list = ["son","mom","dad"]
-#     return render_template("login.html", profile_list=profile_list)
-
 
 def update_activitytracking():
-    # session = get_db()
     activity_table = session.query(Activity).all()
    
     for act in activity_table:
@@ -216,27 +206,6 @@ def history(id):
     return render_template('history.html',status=statuses,task=task,profile=profile,date=get_current_date(), view=  GetKey(num_person).title(), act_id=pro_id, user_id= user_id_g)
 
 
-# @app.route("/yesterday/<int:id>", methods = ["GET"])
-# def yesterday(id):
-#     task_ids = session.query(Activity.activity_id).filter(Activity.profile_id==id).all()
-#     task_ids1=[]
-#     for i in task_ids:
-#         task_ids1.append(i[0])
-#     statuses=[]
-#     d={0:"incomplete",1:"completed"}
-#     today = get_current_date()
-#     yesterday = today - timedelta(days = 1)
-#     #yesterday = "2023-01-19"
-#     for i in task_ids1:
-#         s = session.query(ActivityTracking.status).filter(and_ ((ActivityTracking.date) == (yesterday) , ActivityTracking.activity_id==i)).first()[0]
-#         t= session.query(Activity.activity).filter(Activity.activity_id==i).first()[0]
-#         statuses.append((t,str(yesterday),d[s]))
-#         print(statuses[-1])
-#     pro_id = session.query(Activity.profile_id).filter(Activity.activity_id==id).first()[0]
-#     profile = session.query(Profiles.profiles).filter(Profiles.id==pro_id).first()[0]
-    
-#     return render_template('yesterday.html',status=statuses,profile=profile, date= yesterday, id =  id, view= GetKey(num_person).title(), y_date = yesterday, user_id = user_id_g)
-
 
 
 @app.route("/yesterday/<int:id>", methods = ["GET","POST"])
@@ -306,18 +275,6 @@ def yesterday(id):
     profile = session.query(Profiles.profiles).filter(Profiles.id==pro_id).first()[0]
     
     return render_template('yesterday.html',status=statuses,profile=profile, date= yesterday, id =  id, view= GetKey(num_person).title(), y_date = yesterday, user_id = user_id_g)
-
-
-
-# @app.get("/logout", response_class=RedirectResponse)
-# def logout(request: Request, credentials: HTTPAuthorizationCredentials = Depends(security)):
-#     response = RedirectResponse(url="/")
-#     response.delete_cookie("Authorization")
-#     return response
-
-    
-
-
 
 
 
