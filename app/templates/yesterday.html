@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthHub</title>
+</head>
+<body>
+    
+    <h3>Profile : {{profile}} </h3>
+    <h3>Viewing as: {{view}}</h3>
+    <a href="/get/activities/{{id}}"><button>Back to Today's Tasks</button></a>
+    <h3>Yesterday - {{y_date}}</h3>
+
+    {% if yesterday_not_found }
+    <p>No tasks assigned</p>
+    {%else%}
+
+
+
+    {% if status|length ==0 %}
+        <p>No tasks assigned</p>
+    {% else %}
+
+    {%for i in status%}
+    <p>Task :{{i[0]}} --- {{i[2]}}</p>
+    {%endfor%}
+
+    {% endif %}
+    <form action="" method="post">
+        <label for="now_date"></label>
+        <input type="date" name="now_date" value = "{{y_date}}" hidden>
+        <input type="number" name = "number" value="1" hidden>
+        <input type="submit" value="Previous Day">
+    </form>
+<br>
+    {% if back_exists %}
+    <form action="" method="post">
+        <label for="now_date"></label>
+        <input type="date" name="now_date" value = "{{y_date}}" hidden>
+        <input type="number" name = "number" value="0" hidden>
+        <input type="submit" value="Next Day">
+    </form>
+    {% endif %}
+
+    {% endif %}
+
+    <button><a href="/logout">Logout</a></button>
+</body>
+</html>

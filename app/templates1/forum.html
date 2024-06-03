@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Content</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">    <!-- Custom CSS for color theme and post boxes -->
+    <style>
+        /* Page background color */
+        body {
+            background-color: #100c29; /* Dark blue */
+            color: #ffffff; /* White text */
+            padding: 20px;
+        }
+
+        /* Form styling */
+        form {
+            background-color: #25202c; /* Slightly darker blue */
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        /* Textarea styling */
+        textarea {
+            background-color: #ffffff; /* White background */
+            color: #000000; /* Black text */
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+        }
+
+        /* Button styling */
+        button[type="submit"] {
+            background-color: #7a63a7; /* Violet */
+            color: #ffffff; /* White text */
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+
+        /* Post boxes */
+        .post-box {
+            background-color: #312741; /* Darker blue */
+            color: #ffffff; /* White text */
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+
+        /* Username styling */
+        .post-box .username {
+            color: #7a63a7; /* Violet */
+            font-size: 20px; /* Larger font size */
+            font-weight: bold; /* Bold text */
+        }
+
+        /* Content styling */
+        .post-box .content {
+            font-size: 18px; /* Larger font size */
+        }
+
+        /* Date styling */
+        .post-box .date {
+            color: #cccccc; /* Light gray color */
+        }
+    </style>
+</head>
+<body>
+    <button type="{{url_for('dislay', id=user_id)}}" class="btn btn-success">Back</button>
+    <form action="" method="post">
+        <div class="mb-3">
+            <label for="content" class="form-label">Your content:</label>
+            <textarea name="content" id="content" cols="30" rows="10" class="form-control"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Post</button>
+    </form>
+
+    {% if data %}
+        {% for post in data %}
+            <div class="post-box">
+                <p class="username">{{ user_names[loop.index] }}</p>
+                <p class="content">{{ post.content }}</p>
+                <p class="date">{{ post.date }}</p>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <!-- Bootstrap JS (optional) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.5.0/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
